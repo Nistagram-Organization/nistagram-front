@@ -7,8 +7,21 @@ const getPosts = async () => {
     return response.data
 }
 
+const likePost = async (likeRequestDTO) => {
+    const response = await axios.post(`${BASE_URL}/posts/like`, likeRequestDTO)
+    return response.data
+}
+
+const unlikePost = async (likeRequestDTO) => {
+    console.log(likeRequestDTO)
+    const response = await axios.delete(`${BASE_URL}/posts/like`, { data:likeRequestDTO })
+    return response.data
+}
+
 const postService = {
-    getPosts
+    getPosts,
+    likePost,
+    unlikePost
 }
 
 
