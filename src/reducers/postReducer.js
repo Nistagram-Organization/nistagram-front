@@ -11,24 +11,13 @@ export const getPosts = () => {
     }
 }
 
-export const likePost = (userId, postId) => {
+export const likePost = (userId, postId, liked) => {
     return async() => {
         let likeRequestDTO = {
             'PostID': postId,
             'UserID': userId
         }
-        await postService.likePost(likeRequestDTO)
-    }
-}
-
-export const unlikePost = (userId, postId) => {
-    return async() => {
-        let likeRequestDTO = {
-            'PostID': postId,
-            'UserID': userId
-        }
-        console.log(likeRequestDTO)
-        await postService.unlikePost(likeRequestDTO)
+        !liked ? await postService.likePost(likeRequestDTO) : await postService.unlikePost(likeRequestDTO)
     }
 }
 

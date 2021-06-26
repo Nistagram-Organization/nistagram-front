@@ -4,7 +4,7 @@ import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined'
 import './Post.css'
 import { Checkbox, FormControlLabel } from '@material-ui/core'
 import { ThumbUpAlt, ThumbUpAltOutlined } from '@material-ui/icons'
-import { likePost, unlikePost } from '../../reducers/postReducer'
+import { likePost } from '../../reducers/postReducer'
 import { useDispatch } from 'react-redux'
 
 const Post = ({ username, image, description }) => {
@@ -31,7 +31,7 @@ const Post = ({ username, image, description }) => {
             <div className="Post-caption">
                 <strong>{username}</strong> {description}
             </div>
-            <FormControlLabel id="like" onClick={() => !liked ? dispatch(likePost(1, 1)) : dispatch(unlikePost(1, 1))}
+            <FormControlLabel id="like" onClick={() => dispatch(likePost(1, 1, liked))}
                               control={<Checkbox icon={<ThumbUpAltOutlined/>}
                                                  checkedIcon={<ThumbUpAlt/>}
                                                  name="like"
