@@ -13,7 +13,6 @@ const likePost = async (likeRequestDTO) => {
 }
 
 const unlikePost = async (likeRequestDTO) => {
-    console.log(likeRequestDTO)
     const response = await axios.delete(`${BASE_URL}/posts/like`, { data:likeRequestDTO })
     return response.data
 }
