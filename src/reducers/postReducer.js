@@ -11,6 +11,16 @@ export const getPosts = () => {
     }
 }
 
+export const likePost = (userId, postId, liked) => {
+    return async() => {
+        let likeRequestDTO = {
+            'PostID': postId,
+            'UserID': userId
+        }
+        !liked ? await postService.likePost(likeRequestDTO) : await postService.unlikePost(likeRequestDTO)
+    }
+}
+
 const reducer = (state = { list: [] }, action) => {
     switch (action.type) {
         case 'GET_POSTS': {

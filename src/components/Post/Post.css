@@ -38,7 +38,7 @@
 }
 
 .Post-caption {
-  padding: 16px 16px;
+  padding: 16px 16px 0 16px;
 }
 .Post-caption strong {
   font-family: 'PT Sans', sans-serif;
@@ -49,4 +49,8 @@
   display: none;
   visibility: hidden;
   opacity: 0;
+}
+
+#like {
+  padding: 0 0 0 16px;
 }

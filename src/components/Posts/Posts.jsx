@@ -22,7 +22,7 @@ const Posts = () => {
                         <Post
                             username={post.user.username}
                             image={post.image}
-                            caption={post.description}
+                            description={post.description}
                             key={post.id}
                         />
                     ))}
