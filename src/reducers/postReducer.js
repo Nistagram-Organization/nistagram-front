@@ -13,11 +13,31 @@ export const getPosts = () => {
 
 export const likePost = (userId, postId, liked) => {
     return async() => {
-        let likeRequestDTO = {
-            'PostID': postId,
-            'UserID': userId
+        if (!liked) {
+            let likeRequestDTO = {
+                'PostID': postId,
+                'UserID': userId
+            }
+            await postService.likePost(likeRequestDTO)
         }
-        !liked ? await postService.likePost(likeRequestDTO) : await postService.unlikePost(likeRequestDTO)
+        else {
+            await postService.unlikePost(userId, postId)
+        }
+    }
+}
+
+export const dislikePost = (userId, postId, disliked) => {
+    return async() => {
+        if (!disliked) {
+            let dislikeRequestDTO = {
+                'PostID': postId,
+                'UserID': userId
+            }
+            await postService.dislikePost(dislikeRequestDTO)
+        }
+        else {
+            await postService.undislikePost(userId, postId)
+        }
     }
 }
 

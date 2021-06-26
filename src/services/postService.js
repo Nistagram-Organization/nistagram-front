@@ -12,15 +12,27 @@ const likePost = async (likeRequestDTO) => {
     return response.data
 }
 
-const unlikePost = async (likeRequestDTO) => {
-    const response = await axios.delete(`${BASE_URL}/posts/like`, { data:likeRequestDTO })
+const unlikePost = async (userId, postId) => {
+    const response = await axios.delete(`${BASE_URL}/posts/like?user_id=${userId}&post_id=${postId}`)
+    return response.data
+}
+
+const dislikePost = async (dislikeRequestDTO) => {
+    const response = await axios.post(`${BASE_URL}/posts/dislike`, dislikeRequestDTO)
+    return response.data
+}
+
+const undislikePost = async (userId, postId) => {
+    const response = await axios.delete(`${BASE_URL}/posts/dislike?user_id=${userId}&post_id=${postId}`)
     return response.data
 }
 
 const postService = {
     getPosts,
     likePost,
-    unlikePost
+    unlikePost,
+    dislikePost,
+    undislikePost
 }
 
 

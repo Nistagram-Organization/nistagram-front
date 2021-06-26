@@ -3,13 +3,26 @@ import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined'
 
 import './Post.css'
 import { Checkbox, FormControlLabel } from '@material-ui/core'
-import { ThumbUpAlt, ThumbUpAltOutlined } from '@material-ui/icons'
-import { likePost } from '../../reducers/postReducer'
+import { ThumbDown, ThumbDownAltOutlined, ThumbUpAlt, ThumbUpAltOutlined } from '@material-ui/icons'
+import { dislikePost, likePost } from '../../reducers/postReducer'
 import { useDispatch } from 'react-redux'
 
 const Post = ({ username, image, description }) => {
     const dispatch = useDispatch()
     const [liked, setLiked] = useState(false)
+    const [disliked, setDisliked] = useState(false)
+
+    const like = () => {
+        if (!disliked) {
+            dispatch(likePost(1, 1, liked))
+        }
+    }
+
+    const dislike = () => {
+        if (!liked) {
+            dispatch(dislikePost(1, 1, disliked))
+        }
+    }
 
     return (
         <article className="Post">
@@ -31,11 +44,25 @@ const Post = ({ username, image, description }) => {
             <div className="Post-caption">
                 <strong>{username}</strong> {description}
             </div>
-            <FormControlLabel id="like" onClick={() => dispatch(likePost(1, 1, liked))}
+            <FormControlLabel id="like" onClick={like}
                               control={<Checkbox icon={<ThumbUpAltOutlined/>}
                                                  checkedIcon={<ThumbUpAlt/>}
                                                  name="like"
-                                                 onChange={() => setLiked(!liked)}/>}
+                                                 checked={liked}
+                                                 onChange={() => {
+                                                     if (!disliked)
+                                                         setLiked(!liked)
+                                                 }}/>}
+                              label=""/>
+            <FormControlLabel id="dislike" onClick={dislike}
+                              control={<Checkbox icon={<ThumbDownAltOutlined/>}
+                                                 checkedIcon={<ThumbDown/>}
+                                                 name="dislike"
+                                                 checked={disliked}
+                                                 onChange={() => {
+                                                     if (!liked)
+                                                         setDisliked(!disliked)
+                                                 }}/>}
                               label=""/>
         </article>
     )
