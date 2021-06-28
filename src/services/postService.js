@@ -27,12 +27,18 @@ const undislikePost = async (userId, postId) => {
     return response.data
 }
 
+const report = async (postId) => {
+    const response = await axios.post(`${BASE_URL}/posts/report/${postId}`)
+    return response.data
+}
+
 const postService = {
     getPosts,
     likePost,
     unlikePost,
     dislikePost,
-    undislikePost
+    undislikePost,
+    report
 }
 
 

@@ -41,6 +41,12 @@ export const dislikePost = (userId, postId, disliked) => {
     }
 }
 
+export const reportPost = (postId) => {
+    return async() => {
+        await postService.report(postId)
+    }
+}
+
 const reducer = (state = { list: [] }, action) => {
     switch (action.type) {
         case 'GET_POSTS': {
