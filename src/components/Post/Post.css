@@ -10,6 +10,7 @@
   padding: 16px;
   align-items: center;
 }
+
 .Post-user-avatar {
   width: 30px;
   height: 30px;
@@ -40,6 +41,7 @@
 .Post-caption {
   padding: 16px 16px 0 16px;
 }
+
 .Post-caption strong {
   font-family: 'PT Sans', sans-serif;
   font-weight: bold;
