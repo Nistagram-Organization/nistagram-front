@@ -10,6 +10,7 @@
   padding: 16px;
   align-items: center;
 }
+
 .Post-user-avatar {
   width: 30px;
   height: 30px;
@@ -40,6 +41,7 @@
 .Post-caption {
   padding: 16px 16px 0 16px;
 }
+
 .Post-caption strong {
   font-family: 'PT Sans', sans-serif;
   font-weight: bold;
@@ -53,4 +55,25 @@
 
 #like {
   padding: 0 0 0 16px;
+}
+
+.Post-comment-box {
+  display: flex;
+  margin-top: 10px;
+}
+
+.Post-input {
+  flex: 0.95;
+  border: none;
+  padding: 10px;
+  border-top: 1px solid lightgray;
+}
+
+.Post-button {
+  flex: 0.05;
+  border: none;
+  color: #6082a3;
+  background-color: transparent;
+  border-top: 1px solid lightgray;
+  cursor: pointer;
 }

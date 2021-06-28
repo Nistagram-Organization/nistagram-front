@@ -4,6 +4,7 @@ export const getPosts = () => {
     return async dispatch => {
         const posts = await postService.getPosts()
 
+
         dispatch({
             type: 'GET_POSTS',
             posts
@@ -42,6 +43,18 @@ export const dislikePost = (userId, postId, disliked) => {
 export const reportPost = (postId) => {
     return async () => {
         await postService.report(postId)
+    }
+}
+
+export const sendComment = (userId, postId, comm) => {
+    let commentToPost = {
+        'PostID': postId,
+        'UserID': userId,
+        'Text': comm,
+    }
+
+    return async () => {
+        await postService.postComment(commentToPost)
     }
 }
 
