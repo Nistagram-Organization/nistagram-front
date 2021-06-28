@@ -3,14 +3,22 @@ import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined'
 
 import './Post.css'
 import { Checkbox, FormControlLabel } from '@material-ui/core'
-import { ThumbDown, ThumbDownAltOutlined, ThumbUpAlt, ThumbUpAltOutlined } from '@material-ui/icons'
-import { dislikePost, likePost } from '../../reducers/postReducer'
+import {
+    Report,
+    ReportOutlined,
+    ThumbDown,
+    ThumbDownAltOutlined,
+    ThumbUpAlt,
+    ThumbUpAltOutlined
+} from '@material-ui/icons'
+import { dislikePost, likePost, reportPost } from '../../reducers/postReducer'
 import { useDispatch } from 'react-redux'
 
 const Post = ({ username, image, description }) => {
     const dispatch = useDispatch()
     const [liked, setLiked] = useState(false)
     const [disliked, setDisliked] = useState(false)
+    const [reported, setReported] = useState(false)
 
     const like = () => {
         if (!disliked) {
@@ -22,6 +30,13 @@ const Post = ({ username, image, description }) => {
         if (!liked) {
             dispatch(dislikePost(1, 1, disliked))
         }
+    }
+
+    const report = () => {
+        if (reported)
+            return
+        setReported(true)
+        dispatch(reportPost(1))
     }
 
     return (
@@ -63,6 +78,12 @@ const Post = ({ username, image, description }) => {
                                                      if (!liked)
                                                          setDisliked(!disliked)
                                                  }}/>}
+                              label=""/>
+            <FormControlLabel id="report" onClick={report}
+                              control={<Checkbox icon={<ReportOutlined/>}
+                                                 checkedIcon={<Report/>}
+                                                 name="report"
+                                                 checked={reported}/>}
                               label=""/>
         </article>
     )
