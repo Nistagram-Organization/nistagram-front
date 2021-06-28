@@ -1,0 +1,9 @@
+version: '3.7'
+
+services:
+  nistagram-front:
+    container_name: nistagram-front
+    build:
+      context: .
+    ports:
+      - 3001:3001
