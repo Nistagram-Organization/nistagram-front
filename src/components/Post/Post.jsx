@@ -11,7 +11,7 @@ import {
     ThumbUpAlt,
     ThumbUpAltOutlined
 } from '@material-ui/icons'
-import { dislikePost, likePost, reportPost } from '../../reducers/postReducer'
+import { dislikePost, likePost, reportPost, sendComment } from '../../reducers/postReducer'
 import { useDispatch } from 'react-redux'
 
 const Post = ({ username, image, description }) => {
@@ -19,6 +19,7 @@ const Post = ({ username, image, description }) => {
     const [liked, setLiked] = useState(false)
     const [disliked, setDisliked] = useState(false)
     const [reported, setReported] = useState(false)
+    const [comment, setComment] = useState('')
 
     const like = () => {
         if (!disliked) {
@@ -37,6 +38,13 @@ const Post = ({ username, image, description }) => {
             return
         setReported(true)
         dispatch(reportPost(1))
+    }
+
+    const postComment = (event) => {
+        event.preventDefault()
+
+        dispatch(sendComment(1, 1, comment))
+        setComment('')
     }
 
     return (
@@ -85,6 +93,21 @@ const Post = ({ username, image, description }) => {
                                                  name="report"
                                                  checked={reported}/>}
                               label=""/>
+            <form className="Post-comment-box">
+                <input
+                    className="Post-input"
+                    type="text"
+                    placeholder="Add a comment..."
+                    value={comment}
+                    onChange={(e) => setComment(e.target.value)}/>
+                <button
+                    className="Post-button"
+                    disabled={!comment}
+                    type="submit"
+                    onClick={postComment}>
+                    Post
+                </button>
+            </form>
         </article>
     )
 }
