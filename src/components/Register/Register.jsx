@@ -74,7 +74,6 @@ const Register = () => {
             try {
                 await authService.register(registrationRequest)
                 dispatch(setNotification('Registration successful', SEVERITY.SUCCESS))
-                // TODO: redirect to login when it is done
             } catch (e) {
                 dispatch(setNotification(e.message, SEVERITY.ERROR))
             }
