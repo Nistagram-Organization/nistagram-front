@@ -4,6 +4,8 @@ import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined'
 import './Post.css'
 import { Checkbox, FormControlLabel } from '@material-ui/core'
 import {
+    Favorite,
+    FavoriteBorder,
     Report,
     ReportOutlined,
     ThumbDown,
@@ -13,6 +15,7 @@ import {
 } from '@material-ui/icons'
 import { dislikePost, likePost, reportPost, sendComment } from '../../reducers/postReducer'
 import { useDispatch } from 'react-redux'
+import { addPostToFavorites } from '../../reducers/userReducer'
 
 const Post = ({ username, image, description }) => {
     const dispatch = useDispatch()
@@ -20,6 +23,7 @@ const Post = ({ username, image, description }) => {
     const [disliked, setDisliked] = useState(false)
     const [reported, setReported] = useState(false)
     const [comment, setComment] = useState('')
+    const [favorite, setFavorite] = useState(false)
 
     const like = () => {
         if (!disliked) {
@@ -31,6 +35,10 @@ const Post = ({ username, image, description }) => {
         if (!liked) {
             dispatch(dislikePost(1, 1, disliked))
         }
+    }
+
+    const addToFavorites = () => {
+        dispatch(addPostToFavorites('master@gmail.com', 1, favorite))
     }
 
     const report = () => {
@@ -92,6 +100,15 @@ const Post = ({ username, image, description }) => {
                                                  checkedIcon={<Report/>}
                                                  name="report"
                                                  checked={reported}/>}
+                              label=""/>
+            <FormControlLabel id="favorites" onClick={addToFavorites}
+                              control={<Checkbox icon={<FavoriteBorder/>}
+                                                 checkedIcon={<Favorite/>}
+                                                 name="favorites"
+                                                 checked={favorite}
+                                                 onChange={() => {
+                                                     setFavorite(!favorite)
+                                                 }}/>}
                               label=""/>
             <form className="Post-comment-box">
                 <input
