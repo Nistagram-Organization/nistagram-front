@@ -14,14 +14,9 @@ i.Nav {
   display: flex;
   flex-direction: row;
   height: 77px;
-  /* justify-content: center; */
   width: 70%;
   margin: 0 auto;
   padding: 26px 40px;
-}
-
-.Nav-brand {
-  /* height: auto; */
 }
 
 .Nav-brand-logo {

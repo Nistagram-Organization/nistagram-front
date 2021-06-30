@@ -12,7 +12,7 @@ const Header = () => {
     return (
         <nav className="Nav">
             <div className="Nav-menus">
-                <div className="Nav-brand">
+                <div>
                     <RouterLink className="Nav-brand-logo" to='/posts'>
                         Nistagram
                     </RouterLink>
