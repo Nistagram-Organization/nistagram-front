@@ -1,6 +1,4 @@
-import ROLE from '../roles'
 import userService from '../services/userService'
-import agentService from '../services/agentService'
 
 export const addPostToFavorites = (userEmail, postId, favorite) => {
     return async () => {
@@ -16,14 +14,9 @@ export const addPostToFavorites = (userEmail, postId, favorite) => {
     }
 }
 
-export const getUser = (email, role) => {
+export const getUser = (email) => {
     return async dispatch => {
-        let user
-        if(role === ROLE.USER) {
-            user = await userService.getUser(email)
-        } else {
-            user = await agentService.getAgent(email)
-        }
+        const user = await userService.getUser(email)
 
         dispatch({
             type: 'GET_USER',
@@ -32,13 +25,9 @@ export const getUser = (email, role) => {
     }
 }
 
-export const editUser = (user, role) => {
+export const editUser = (user) => {
     return async dispatch => {
-        if(role === ROLE.USER) {
-            user = await userService.editUser(user)
-        } else {
-            user = await agentService.editAgent(user)
-        }
+        user = await userService.editUser(user)
 
         dispatch({
             type: 'EDIT_USER',
