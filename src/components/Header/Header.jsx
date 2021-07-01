@@ -26,6 +26,12 @@ const Header = () => {
                 {
                     isAuthenticated &&
                     <div>
+                        <Button component={RouterLink} to='/create-post'>Create post</Button>
+                    </div>
+                }
+                {
+                    isAuthenticated &&
+                    <div>
                         <LogoutButton/>
                     </div>
                 }

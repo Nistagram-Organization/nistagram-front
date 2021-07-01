@@ -47,6 +47,12 @@ const postComment = async (comment) => {
     return response.data
 }
 
+const createPost = async (post) => {
+    console.log(post)
+    const response = await axios.post(`${BASE_URL}/posts`, post)
+    return response.data
+}
+
 const postService = {
     getPosts,
     likePost,
@@ -54,7 +60,8 @@ const postService = {
     dislikePost,
     undislikePost,
     report,
-    postComment
+    postComment,
+    createPost
 }
 
 
