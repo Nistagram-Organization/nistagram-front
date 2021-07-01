@@ -12,30 +12,30 @@ export const getPosts = () => {
     }
 }
 
-export const likePost = (userId, postId, liked) => {
+export const likePost = (userEmail, postId, liked) => {
     return async () => {
         if (!liked) {
             let likeRequestDTO = {
                 'PostID': postId,
-                'UserID': userId
+                'UserEmail': userEmail
             }
             await postService.likePost(likeRequestDTO)
         } else {
-            await postService.unlikePost(userId, postId)
+            await postService.unlikePost(userEmail, postId)
         }
     }
 }
 
-export const dislikePost = (userId, postId, disliked) => {
+export const dislikePost = (userEmail, postId, disliked) => {
     return async () => {
         if (!disliked) {
             let dislikeRequestDTO = {
                 'PostID': postId,
-                'UserID': userId
+                'UserEmail': userEmail
             }
             await postService.dislikePost(dislikeRequestDTO)
         } else {
-            await postService.undislikePost(userId, postId)
+            await postService.undislikePost(userEmail, postId)
         }
     }
 }
@@ -46,10 +46,10 @@ export const reportPost = (postId) => {
     }
 }
 
-export const sendComment = (userId, postId, comm) => {
+export const sendComment = (userEmail, postId, comm) => {
     let commentToPost = {
         'PostID': postId,
-        'UserID': userId,
+        'UserEmail': userEmail,
         'Text': comm,
     }
 
