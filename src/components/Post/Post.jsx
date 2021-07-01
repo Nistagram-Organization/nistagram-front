@@ -13,11 +13,13 @@ import {
     ThumbUpAlt,
     ThumbUpAltOutlined
 } from '@material-ui/icons'
+import { useAuth0 } from '@auth0/auth0-react'
 import { dislikePost, likePost, reportPost, sendComment } from '../../reducers/postReducer'
 import { useDispatch } from 'react-redux'
 import { addPostToFavorites } from '../../reducers/userReducer'
 
 const Post = ({ username, image, description }) => {
+    const { user } = useAuth0()
     const dispatch = useDispatch()
     const [liked, setLiked] = useState(false)
     const [disliked, setDisliked] = useState(false)
@@ -27,18 +29,18 @@ const Post = ({ username, image, description }) => {
 
     const like = () => {
         if (!disliked) {
-            dispatch(likePost(1, 1, liked))
+            dispatch(likePost(user.email, 1, liked))
         }
     }
 
     const dislike = () => {
         if (!liked) {
-            dispatch(dislikePost(1, 1, disliked))
+            dispatch(dislikePost(user.email, 1, disliked))
         }
     }
 
     const addToFavorites = () => {
-        dispatch(addPostToFavorites('master@gmail.com', 1, favorite))
+        dispatch(addPostToFavorites(user.email, 1, favorite))
     }
 
     const report = () => {
@@ -51,7 +53,7 @@ const Post = ({ username, image, description }) => {
     const postComment = (event) => {
         event.preventDefault()
 
-        dispatch(sendComment(1, 1, comment))
+        dispatch(sendComment(user.email, 1, comment))
         setComment('')
     }
 
