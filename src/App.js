@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setAuth } from './reducers/authReducer'
 import ROLE from './roles'
 import Profile from './components/Profile/Profile'
+import CreatePost from './components/CreatePost/CreatePost'
 
 const App = () => {
     const dispatch = useDispatch()
@@ -49,6 +50,9 @@ const App = () => {
                         {/* set required roles in this manner */}
                         <GuardedRoute path='/posts' meta={{ roles: [ROLE.USER, ROLE.AGENT] }}>
                             <Posts/>
+                        </GuardedRoute>
+                        <GuardedRoute path='/create-post' meta={{ roles: [ROLE.USER, ROLE.AGENT] }}>
+                            <CreatePost/>
                         </GuardedRoute>
                         <Route exact path='/'>
                             <Redirect to='/posts'/>
