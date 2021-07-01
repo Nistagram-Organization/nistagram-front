@@ -18,7 +18,12 @@ const addPostToFavorites = async (favoritesDTO) => {
 }
 
 const removePostFromFavorites = async (userEmail, postId) => {
-    const response = await axios.delete(`${BASE_URL}/users/favorites?post_id=${postId}&user_mail=${userEmail}`)
+    const response = await axios.delete(`${BASE_URL}/users/favorites`, {
+        params: {
+            post_id: postId,
+            user_mail: userEmail
+        }
+    })
     return response.data
 }
 

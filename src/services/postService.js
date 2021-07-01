@@ -13,7 +13,12 @@ const likePost = async (likeRequestDTO) => {
 }
 
 const unlikePost = async (userEmail, postId) => {
-    const response = await axios.delete(`${BASE_URL}/posts/like?user_mail=${userEmail}&post_id=${postId}`)
+    const response = await axios.delete(`${BASE_URL}/posts/like`, {
+        params: {
+            post_id: postId,
+            user_mail: userEmail
+        }
+    })
     return response.data
 }
 
@@ -23,7 +28,12 @@ const dislikePost = async (dislikeRequestDTO) => {
 }
 
 const undislikePost = async (userEmail, postId) => {
-    const response = await axios.delete(`${BASE_URL}/posts/dislike?user_mail=${userEmail}&post_id=${postId}`)
+    const response = await axios.delete(`${BASE_URL}/posts/dislike`, {
+        params: {
+            post_id: postId,
+            user_mail: userEmail
+        }
+    })
     return response.data
 }
 
