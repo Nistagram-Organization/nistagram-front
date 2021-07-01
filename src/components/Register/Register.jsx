@@ -22,12 +22,12 @@ const validationSchema = yup.object({
         .string('Enter your username')
         .min(4, 'Username should be of minimum 4 characters length')
         .required('Username is required'),
-    name: yup
-        .string('Enter your name')
-        .required('Name is required'),
-    surname: yup
-        .string('Enter your surname')
-        .required('Surname is required'),
+    first_name: yup
+        .string('Enter your first name')
+        .required('First name is required'),
+    last_name: yup
+        .string('Enter your last name')
+        .required('Last name is required'),
     phone: yup
         .string('Enter your phone')
         .matches(/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s./0-9]*$/)
@@ -56,8 +56,8 @@ const Register = () => {
             email: '',
             password: '',
             username: '',
-            name: '',
-            surname: '',
+            first_name: '',
+            last_name: '',
             phone: '',
             birth_date: new Date(),
             gender: 0,
@@ -74,7 +74,6 @@ const Register = () => {
             try {
                 await authService.register(registrationRequest)
                 dispatch(setNotification('Registration successful', SEVERITY.SUCCESS))
-                // TODO: redirect to login when it is done
             } catch (e) {
                 dispatch(setNotification(e.message, SEVERITY.ERROR))
             }
@@ -124,25 +123,25 @@ const Register = () => {
                 <Grid item xs={6}>
                     <TextField
                         fullWidth
-                        id="name"
-                        name="name"
-                        label="Name"
-                        value={formik.values.name}
+                        id="first_name"
+                        name="first_name"
+                        label="First name"
+                        value={formik.values.first_name}
                         onChange={formik.handleChange}
-                        error={formik.touched.name && Boolean(formik.errors.name)}
-                        helperText={formik.touched.name && formik.errors.name}
+                        error={formik.touched.first_name && Boolean(formik.errors.first_name)}
+                        helperText={formik.touched.first_name && formik.errors.first_name}
                     />
                 </Grid>
                 <Grid item xs={6}>
                     <TextField
                         fullWidth
-                        id="surname"
-                        name="surname"
-                        label="Surname"
-                        value={formik.values.surname}
+                        id="last_name"
+                        name="last_name"
+                        label="Last name"
+                        value={formik.values.last_name}
                         onChange={formik.handleChange}
-                        error={formik.touched.surname && Boolean(formik.errors.surname)}
-                        helperText={formik.touched.surname && formik.errors.surname}
+                        error={formik.touched.last_name && Boolean(formik.errors.last_name)}
+                        helperText={formik.touched.last_name && formik.errors.last_name}
                     />
                 </Grid>
                 <Grid item xs={6}>

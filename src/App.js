@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import './App.css'
 import Header from './components/Header/Header'
 import Posts from './components/Posts/Posts'
-import { Switch, Redirect } from 'react-router-dom'
+import { Switch, Redirect, Route } from 'react-router-dom'
 import Register from './components/Register/Register'
 import Toaster from './components/Toaster/Toaster'
 import { useAuth0 } from '@auth0/auth0-react'
@@ -10,14 +10,16 @@ import { GuardedRoute, GuardProvider } from 'react-router-guards'
 import { useDispatch, useSelector } from 'react-redux'
 import { setAuth } from './reducers/authReducer'
 import ROLE from './roles'
+import Profile from './components/Profile/Profile'
 
 const App = () => {
     const dispatch = useDispatch()
-    const { isAuthenticated, getAccessTokenSilently } = useAuth0()
+    const { isAuthenticated, isLoading, getAccessTokenSilently } = useAuth0()
     const roles = useSelector(state => state.authentication.roles)
+    // const token = useSelector(state => state.authentication.token)
 
     useEffect(() => {
-        if(isAuthenticated && roles === null) {
+        if(!isLoading && isAuthenticated) {
             dispatch(setAuth(getAccessTokenSilently))
         }
     }, [isAuthenticated])
@@ -38,6 +40,9 @@ const App = () => {
             <section className="App-main">
                 <Switch>
                     <GuardProvider guards={[requireAuthentication]}>
+                        <GuardedRoute path='/profile'>
+                            <Profile/>
+                        </GuardedRoute>
                         <GuardedRoute path='/register'>
                             <Register/>
                         </GuardedRoute>
@@ -45,9 +50,9 @@ const App = () => {
                         <GuardedRoute path='/posts' meta={{ roles: [ROLE.USER, ROLE.AGENT] }}>
                             <Posts/>
                         </GuardedRoute>
-                        <GuardedRoute exact path='*'>
-                            <Redirect to='/register'/>
-                        </GuardedRoute>
+                        <Route exact path='/'>
+                            <Redirect to='/posts'/>
+                        </Route>
                     </GuardProvider>
                 </Switch>
             </section>
