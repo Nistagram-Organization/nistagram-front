@@ -4,7 +4,6 @@ export const getPosts = () => {
     return async dispatch => {
         const posts = await postService.getPosts()
 
-
         dispatch({
             type: 'GET_POSTS',
             posts
