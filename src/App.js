@@ -86,7 +86,7 @@ const App = () => {
                 </div>
             )
         }
-        case ROLE.USER || ROLE.AGENT: {
+        default: {
             return (
                 <div className="App">
                     <Header/>
