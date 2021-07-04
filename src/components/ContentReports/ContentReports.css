@@ -1,0 +1,15 @@
+.Grid-list {
+    flex-wrap: nowrap;
+    transform: translateZ(0);
+}
+
+.Grid-list-subheader {
+    height: auto;
+}
+
+.root {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    overflow: hidden;
+}
