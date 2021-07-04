@@ -5,12 +5,14 @@ import postReducer from './reducers/postReducer'
 import notificationReducer from './reducers/notificationReducer'
 import authReducer from './reducers/authReducer'
 import userReducer from './reducers/userReducer'
+import adminReducer from './reducers/adminReducer'
 
 const reducer = combineReducers({
     users: userReducer,
     posts: postReducer,
     notification: notificationReducer,
-    authentication: authReducer
+    authentication: authReducer,
+    admin: adminReducer
 })
 
 const store = createStore(
