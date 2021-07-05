@@ -19,7 +19,7 @@ import UserProfileFeed from './components/UserProfileFeed/UserProfileFeed'
 
 const App = () => {
     const dispatch = useDispatch()
-    const { isAuthenticated, isLoading, getAccessTokenSilently } = useAuth0()
+    const { user, isAuthenticated, isLoading, getAccessTokenSilently } = useAuth0()
     const roles = useSelector(state => state.authentication.roles)
     const role = isAuthenticated && roles ? roles[0] : null
 
@@ -101,7 +101,7 @@ const App = () => {
                                     <Profile/>
                                 </GuardedRoute>
                                 <GuardedRoute path='/posts' meta={{ roles: [ROLE.USER, ROLE.AGENT] }}>
-                                    <Posts/>
+                                    <Posts loggedInUser={user.email}/>
                                 </GuardedRoute>
                                 <GuardedRoute path='/create-post' meta={{ roles: [ROLE.USER, ROLE.AGENT] }}>
                                     <CreatePost/>

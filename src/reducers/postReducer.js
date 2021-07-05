@@ -1,8 +1,8 @@
 import postService from '../services/postService'
 
-export const getPosts = () => {
+export const getUsersPosts = (shownUser, loggedInUser) => {
     return async dispatch => {
-        const posts = await postService.getPosts()
+        const posts = await postService.getUsersPosts(shownUser, loggedInUser)
 
         dispatch({
             type: 'GET_POSTS',
@@ -11,9 +11,9 @@ export const getPosts = () => {
     }
 }
 
-export const getUsersPosts = (shownUser, loggedInUser) => {
+export const getPostsFeed = (loggedInUser) => {
     return async dispatch => {
-        const posts = await postService.getUsersPosts(shownUser, loggedInUser)
+        const posts = await postService.getPostsFeed(loggedInUser)
 
         dispatch({
             type: 'GET_POSTS',

@@ -18,9 +18,9 @@ const UserProfileFeed = () => {
     useEffect(() => {
         if (!shownUser || shownUser.username !== idMatch) {
             idMatch && dispatch(getUserByUsername(idMatch.params.username))
-        } else {
-            if (user)
-                dispatch(checkIfUserIsFollowing(shownUser.email, user.email))
+        }
+        if (user) {
+            dispatch(checkIfUserIsFollowing(shownUser.email, user.email))
         }
     }, [])
 

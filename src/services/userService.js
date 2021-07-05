@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const BASE_URL = process.env.REACT_APP_USERS_URL
+const BASE_URL = process.env.REACT_APP_GATEWAY_URL || process.env.REACT_APP_USERS_URL
 
 const getUser = async (email) => {
     const response = await axios.get(`${BASE_URL}/users`, { params: { email: email } })
