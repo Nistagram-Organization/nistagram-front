@@ -24,14 +24,14 @@ const App = () => {
     const role = isAuthenticated && roles ? roles[0] : null
 
     useEffect(() => {
-        if(!isLoading && isAuthenticated) {
+        if (!isLoading && isAuthenticated) {
             dispatch(setAuth(getAccessTokenSilently))
         }
     }, [isAuthenticated])
 
     const requireAuthentication = (to, from, next) => {
-        if(to.meta.roles) {
-            if(isAuthenticated && roles.some(r => to.meta.roles.indexOf(r) >= 0)) {
+        if (to.meta.roles) {
+            if (isAuthenticated && roles.some(r => to.meta.roles.indexOf(r) >= 0)) {
                 next()
             }
             next.redirect(from)
