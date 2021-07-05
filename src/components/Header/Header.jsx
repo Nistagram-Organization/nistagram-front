@@ -64,15 +64,18 @@ const Header = () => {
                                 Nistagram
                             </RouterLink>
                         </div>
-                            <div>
-                                <Button component={RouterLink} to='/profile'>Profile</Button>
-                            </div>
-                            <div>
-                                <Button component={RouterLink} to='/create-post'>Create post</Button>
-                            </div>
-                            <div>
-                                <LogoutButton/>
-                            </div>
+                        <div>
+                            <Button component={RouterLink} to='/posts'>Feed</Button>
+                        </div>
+                        <div>
+                            <Button component={RouterLink} to='/create-post'>Create post</Button>
+                        </div>
+                        <div>
+                            <Button component={RouterLink} to='/profile'>Profile</Button>
+                        </div>
+                        <div>
+                            <LogoutButton/>
+                        </div>
                     </div>
                 </nav>
             )

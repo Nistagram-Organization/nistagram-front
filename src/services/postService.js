@@ -67,6 +67,15 @@ const getInappropriateContent = async () => {
     return response.data
 }
 
+const getPostsFeed = async (loggedInUser) => {
+    const response = await axios.get(`${BASE_URL}/posts/feed`, {
+        params: {
+            user: loggedInUser,
+        }
+    })
+    return response.data
+}
+
 const postService = {
     getPosts,
     likePost,
@@ -77,7 +86,8 @@ const postService = {
     postComment,
     createPost,
     getInappropriateContent,
-    getUsersPosts
+    getUsersPosts,
+    getPostsFeed
 }
 
 

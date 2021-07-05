@@ -22,6 +22,17 @@ export const getUsersPosts = (shownUser, loggedInUser) => {
     }
 }
 
+export const getPostsFeed = (loggedInUser) => {
+    return async dispatch => {
+        const posts = await postService.getPostsFeed(loggedInUser)
+
+        dispatch({
+            type: 'GET_POSTS',
+            posts
+        })
+    }
+}
+
 export const likePost = (userEmail, postId, liked) => {
     return async () => {
         if (!liked) {

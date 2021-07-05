@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import Post from '../Post/Post'
 import { useDispatch, useSelector } from 'react-redux'
-import { getUsersPosts } from '../../reducers/postReducer'
+import { getPostsFeed, getUsersPosts } from '../../reducers/postReducer'
 import './Posts.css'
 
 const Posts = ({ shownUser, loggedInUser }) => {
@@ -12,12 +12,14 @@ const Posts = ({ shownUser, loggedInUser }) => {
     useEffect(() => {
         if (shownUser !== undefined) {
             dispatch(getUsersPosts(shownUser.email, loggedInUser))
+        } else {
+            dispatch(getPostsFeed(loggedInUser))
         }
     }, [])
 
     return (
         <div>
-            {shownUser.public || following || shownUser.email === loggedInUser ? <div className="Posts">
+            {(!shownUser && loggedInUser) || (shownUser.public || following || shownUser.email === loggedInUser) ? <div className="Posts">
                 {posts !== null ? posts
                     .map(post => (
                         <Post
