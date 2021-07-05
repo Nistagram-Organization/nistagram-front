@@ -8,7 +8,7 @@ const getUser = async (email) => {
 }
 
 const getUserByUsername = async (username) => {
-    const response = await axios.get(`${BASE_URL}/users-by-username`, { params: { username: username } })
+    const response = await axios.get(`${BASE_URL}/users/${username}`)
     return response.data
 }
 
