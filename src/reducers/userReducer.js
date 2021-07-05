@@ -47,7 +47,33 @@ export const editUser = (user) => {
     }
 }
 
-const reducer = (state = { user: null, shown: null }, action) => {
+export const followUser = (userEmail, loggedInUser) => {
+    return async dispatch => {
+        let followRequest = {
+            User: loggedInUser,
+            UserToFollow: userEmail
+        }
+        await userService.followUser(followRequest)
+
+        dispatch({
+            type: 'FOLLOWING_USER',
+            following: true
+        })
+    }
+}
+
+export const checkIfUserIsFollowing = (userEmail, loggedInUser) => {
+    return async dispatch => {
+        let following = await userService.checkIfUserIsFollowing(userEmail, loggedInUser)
+
+        dispatch({
+            type: 'FOLLOWING_USER',
+            following
+        })
+    }
+}
+
+const reducer = (state = { user: null, shown: null, following: false }, action) => {
     switch (action.type) {
         case 'GET_USER': {
             return {
@@ -63,6 +89,12 @@ const reducer = (state = { user: null, shown: null }, action) => {
             return {
                 ...state,
                 shown: action.user
+            }
+        }
+        case 'FOLLOWING_USER': {
+            return {
+                ...state,
+                following: action.following
             }
         }
         default:

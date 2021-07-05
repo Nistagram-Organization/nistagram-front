@@ -52,6 +52,9 @@ const App = () => {
                             <Route path='/public'>
                                 <div>Public posts</div>
                             </Route>
+                            <Route exact path='/users/:username'>
+                                <UserProfileFeed/>
+                            </Route>
                             <Route exact path='/'>
                                 <Redirect to='/public'/>
                             </Route>

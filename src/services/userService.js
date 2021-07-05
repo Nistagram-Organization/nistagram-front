@@ -32,13 +32,30 @@ const removePostFromFavorites = async (userEmail, postId) => {
     return response.data
 }
 
+const followUser = async (followRequest) => {
+    const response = await axios.post(`${BASE_URL}/users/following`, followRequest)
+    return response.data
+}
+
+const checkIfUserIsFollowing = async (userEmail, loggedInUser) => {
+    const response = await axios.get(`${BASE_URL}/users/following`, {
+        params: {
+            user: loggedInUser,
+            following_user: userEmail
+        }
+    })
+    return response.data
+}
+
 
 const userService = {
     getUser,
     editUser,
     addPostToFavorites,
     removePostFromFavorites,
-    getUserByUsername
+    getUserByUsername,
+    checkIfUserIsFollowing,
+    followUser
 }
 
 export default userService

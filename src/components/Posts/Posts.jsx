@@ -6,6 +6,8 @@ import './Posts.css'
 
 const Posts = ({ shownUser, loggedInUser }) => {
     const dispatch = useDispatch()
+    const posts = useSelector(state => state.posts.list)
+    const following = useSelector(state => state.users.following)
 
     useEffect(() => {
         if (shownUser !== undefined) {
@@ -13,11 +15,9 @@ const Posts = ({ shownUser, loggedInUser }) => {
         }
     }, [])
 
-    const posts = useSelector(state => state.posts.list)
-
     return (
         <div>
-            {shownUser.public ? <div className="Posts">
+            {shownUser.public || following || shownUser.email === loggedInUser ? <div className="Posts">
                 {posts !== null ? posts
                     .map(post => (
                         <Post
