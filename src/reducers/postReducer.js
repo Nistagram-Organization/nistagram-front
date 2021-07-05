@@ -11,6 +11,17 @@ export const getPosts = () => {
     }
 }
 
+export const getUsersPosts = (shownUser, loggedInUser) => {
+    return async dispatch => {
+        const posts = await postService.getUsersPosts(shownUser, loggedInUser)
+
+        dispatch({
+            type: 'GET_POSTS',
+            posts
+        })
+    }
+}
+
 export const likePost = (userEmail, postId, liked) => {
     return async () => {
         if (!liked) {
@@ -48,8 +59,8 @@ export const reportPost = (postId) => {
 export const sendComment = (userEmail, postId, comm) => {
     let commentToPost = {
         'PostID': postId,
-        'UserEmail': userEmail,
-        'Text': comm,
+        'user_email': userEmail,
+        'text': comm,
     }
 
     return async () => {

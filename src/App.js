@@ -15,6 +15,7 @@ import CreatePost from './components/CreatePost/CreatePost'
 import ContentReports from './components/ContentReports/ContentReports'
 import AgentRequests from './components/AgentRequests/AgentRequests'
 import ContentReport from './components/ContentReport/ContentReport'
+import UserProfileFeed from './components/UserProfileFeed/UserProfileFeed'
 
 const App = () => {
     const dispatch = useDispatch()
@@ -102,6 +103,9 @@ const App = () => {
                                 <GuardedRoute path='/create-post' meta={{ roles: [ROLE.USER, ROLE.AGENT] }}>
                                     <CreatePost/>
                                 </GuardedRoute>
+                                <Route exact path='/users/:username'>
+                                    <UserProfileFeed/>
+                                </Route>
                                 <Route exact path='/'>
                                     <Redirect to='/posts'/>
                                 </Route>

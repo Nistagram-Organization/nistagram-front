@@ -25,6 +25,17 @@ export const getUser = (email) => {
     }
 }
 
+export const getUserByUsername = (username) => {
+    return async dispatch => {
+        const user = await userService.getUserByUsername(username)
+
+        dispatch({
+            type: 'GET_USER_BY_USERNAME',
+            user
+        })
+    }
+}
+
 export const editUser = (user) => {
     return async dispatch => {
         user = await userService.editUser(user)
@@ -36,7 +47,7 @@ export const editUser = (user) => {
     }
 }
 
-const reducer = (state = { user: null }, action) => {
+const reducer = (state = { user: null, shown: null }, action) => {
     switch (action.type) {
         case 'GET_USER': {
             return {
@@ -46,6 +57,12 @@ const reducer = (state = { user: null }, action) => {
         case 'EDIT_USER': {
             return {
                 ...action
+            }
+        }
+        case 'GET_USER_BY_USERNAME': {
+            return {
+                ...state,
+                shown: action.user
             }
         }
         default:
