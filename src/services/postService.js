@@ -1,11 +1,6 @@
 import axios from 'axios'
 
-const BASE_URL = process.env.REACT_APP_POSTS_URL
-
-const getPosts = async () => {
-    const response = await axios.get(`${BASE_URL}/posts`)
-    return response.data
-}
+const BASE_URL = process.env.REACT_APP_GATEWAY_URL || process.env.REACT_APP_POSTS_URL
 
 const likePost = async (likeRequestDTO) => {
     const response = await axios.post(`${BASE_URL}/posts/like`, likeRequestDTO)
@@ -77,7 +72,6 @@ const getPostsFeed = async (loggedInUser) => {
 }
 
 const postService = {
-    getPosts,
     likePost,
     unlikePost,
     dislikePost,
