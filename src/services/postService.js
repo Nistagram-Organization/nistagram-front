@@ -52,6 +52,16 @@ const createPost = async (post) => {
     return response.data
 }
 
+const getUsersPosts = async (shownUser, loggedInUser) => {
+    const response = await axios.get(`${BASE_URL}/posts`, {
+        params: {
+            user: shownUser,
+            logged_in_user: loggedInUser
+        }
+    })
+    return response.data
+}
+
 const getInappropriateContent = async () => {
     const response = await axios.get(`${BASE_URL}/posts/inappropriate`)
     return response.data
@@ -66,7 +76,8 @@ const postService = {
     report,
     postComment,
     createPost,
-    getInappropriateContent
+    getInappropriateContent,
+    getUsersPosts
 }
 
 

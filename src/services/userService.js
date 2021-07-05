@@ -7,6 +7,11 @@ const getUser = async (email) => {
     return response.data
 }
 
+const getUserByUsername = async (username) => {
+    const response = await axios.get(`${BASE_URL}/users/${username}`)
+    return response.data
+}
+
 const editUser = async (user) => {
     const response = await axios.put(`${BASE_URL}/users`, user)
     return response.data
@@ -32,7 +37,8 @@ const userService = {
     getUser,
     editUser,
     addPostToFavorites,
-    removePostFromFavorites
+    removePostFromFavorites,
+    getUserByUsername
 }
 
 export default userService

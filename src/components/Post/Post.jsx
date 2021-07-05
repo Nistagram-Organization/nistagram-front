@@ -14,47 +14,56 @@ import {
     ThumbUpAltOutlined
 } from '@material-ui/icons'
 import { useAuth0 } from '@auth0/auth0-react'
-import { dislikePost, likePost, reportPost, sendComment } from '../../reducers/postReducer'
+import { dislikePost, getUsersPosts, likePost, reportPost, sendComment } from '../../reducers/postReducer'
 import { useDispatch } from 'react-redux'
 import { addPostToFavorites } from '../../reducers/userReducer'
 
-const Post = ({ username, image, description }) => {
+const Post = ({ id, description, date, image, username, liked, disliked, inFavorites, likes, dislikes, comments, shownUser }) => {
     const { user } = useAuth0()
     const dispatch = useDispatch()
-    const [liked, setLiked] = useState(false)
-    const [disliked, setDisliked] = useState(false)
+    const [isLiked, setIsLiked] = useState(liked)
+    const [isDisliked, setIsDisliked] = useState(disliked)
     const [reported, setReported] = useState(false)
     const [comment, setComment] = useState('')
-    const [favorite, setFavorite] = useState(false)
+    const [favorite, setFavorite] = useState(inFavorites)
 
     const like = () => {
-        if (!disliked) {
-            dispatch(likePost(user.email, 1, liked))
+        if (!isDisliked) {
+            dispatch(likePost(user.email, id, isLiked))
+            loadChanges()
         }
     }
 
     const dislike = () => {
-        if (!liked) {
-            dispatch(dislikePost(user.email, 1, disliked))
+        if (!isLiked) {
+            dispatch(dislikePost(user.email, id, isDisliked))
+            loadChanges()
         }
     }
 
     const addToFavorites = () => {
-        dispatch(addPostToFavorites(user.email, 1, favorite))
+        dispatch(addPostToFavorites(user.email, id, favorite))
+        loadChanges()
     }
 
     const report = () => {
         if (reported)
             return
         setReported(true)
-        dispatch(reportPost(1))
+        dispatch(reportPost(id))
+        loadChanges()
     }
 
     const postComment = (event) => {
         event.preventDefault()
 
-        dispatch(sendComment(user.email, 1, comment))
+        dispatch(sendComment(user.email, id, comment))
         setComment('')
+        loadChanges()
+    }
+
+    const loadChanges = () => {
+        dispatch(getUsersPosts(shownUser.email, user.email))
     }
 
     return (
@@ -75,26 +84,32 @@ const Post = ({ username, image, description }) => {
                 </div>
             </div>
             <div className="Post-caption">
-                <strong>{username}</strong> {description}
+                <strong>{username}</strong> <span dangerouslySetInnerHTML={{ __html: description }}/>
+            </div>
+            <div className="Post-caption">
+                <i>{date}</i>
+            </div>
+            <div className="Post-caption">
+                <strong>{likes}</strong> likes <strong>{dislikes}</strong> dislikes
             </div>
             <FormControlLabel id="like" onClick={like}
                               control={<Checkbox icon={<ThumbUpAltOutlined/>}
                                                  checkedIcon={<ThumbUpAlt/>}
                                                  name="like"
-                                                 checked={liked}
+                                                 checked={isLiked}
                                                  onChange={() => {
-                                                     if (!disliked)
-                                                         setLiked(!liked)
+                                                     if (!isDisliked)
+                                                         setIsLiked(!isLiked)
                                                  }}/>}
                               label=""/>
             <FormControlLabel id="dislike" onClick={dislike}
                               control={<Checkbox icon={<ThumbDownAltOutlined/>}
                                                  checkedIcon={<ThumbDown/>}
                                                  name="dislike"
-                                                 checked={disliked}
+                                                 checked={isDisliked}
                                                  onChange={() => {
-                                                     if (!liked)
-                                                         setDisliked(!disliked)
+                                                     if (!isLiked)
+                                                         setIsDisliked(!isDisliked)
                                                  }}/>}
                               label=""/>
             <FormControlLabel id="report" onClick={report}
@@ -112,6 +127,18 @@ const Post = ({ username, image, description }) => {
                                                      setFavorite(!favorite)
                                                  }}/>}
                               label=""/>
+            {comments.length !== 0 ? <div className="Post-comments">
+                {
+                    comments.map((comment, index) => (
+                        <div key={index}>
+                            <p>
+                                <strong>{comment.username}</strong> <span dangerouslySetInnerHTML={{ __html: comment.text }}/><br/>
+                                <small>{comment.date}</small>
+                            </p>
+                        </div>
+                    ))
+                }
+            </div> : null}
             <form className="Post-comment-box">
                 <input
                     className="Post-input"

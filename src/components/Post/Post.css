@@ -77,3 +77,7 @@
   border-top: 1px solid lightgray;
   cursor: pointer;
 }
+
+.Post-comments {
+  padding: 0 20px 0 20px;
+}

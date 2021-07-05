@@ -1,32 +1,45 @@
 import React, { useEffect } from 'react'
 import Post from '../Post/Post'
 import { useDispatch, useSelector } from 'react-redux'
-import { getPosts } from '../../reducers/postReducer'
+import { getUsersPosts } from '../../reducers/postReducer'
+import './Posts.css'
 
-const Posts = () => {
+const Posts = ({ shownUser, loggedInUser }) => {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(getPosts())
+        if (shownUser !== undefined) {
+            dispatch(getUsersPosts(shownUser.email, loggedInUser))
+        }
     }, [])
 
     const posts = useSelector(state => state.posts.list)
 
     return (
         <div>
-            <div className="Posts">
-                {posts
-                    .slice(0)
-                    .reverse()
+            {shownUser.public ? <div className="Posts">
+                {posts !== null ? posts
                     .map(post => (
                         <Post
-                            username={post.user.username}
-                            image={post.image}
+                            id={post.id}
                             description={post.description}
+                            date={post.date}
+                            image={post.image}
+                            username={post.username}
+                            liked={post.liked}
+                            disliked={post.disliked}
+                            inFavorites={post.in_favorites}
+                            likes={post.likes}
+                            dislikes={post.dislikes}
+                            comments={post.Comments}
+                            shownUser={shownUser}
                             key={post.id}
                         />
-                    ))}
+                    )) : null}
+            </div> : <div id="privateDiv">
+                <strong id="private">This profile is private. Follow profile to se its posts.</strong>
             </div>
+            }
         </div>
     )
 }
