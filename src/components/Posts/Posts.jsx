@@ -6,15 +6,14 @@ import './Posts.css'
 
 const Posts = ({ shownUser, loggedInUser }) => {
     const dispatch = useDispatch()
+    const posts = useSelector(state => state.posts.list)
+    const following = useSelector(state => state.users.following)
 
     useEffect(() => {
         if (shownUser !== undefined) {
             dispatch(getUsersPosts(shownUser.email, loggedInUser))
         }
     }, [])
-
-    const posts = useSelector(state => state.posts.list)
-    const following = useSelector(state => state.users.following)
 
     return (
         <div>
