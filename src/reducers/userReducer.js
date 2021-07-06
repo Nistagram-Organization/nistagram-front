@@ -1,4 +1,6 @@
 import userService from '../services/userService'
+import { setNotification } from './notificationReducer'
+import SEVERITY from '../severity'
 
 export const addPostToFavorites = (userEmail, postId, favorite) => {
     return async () => {
@@ -27,7 +29,12 @@ export const getUser = (email) => {
 
 export const getUserByUsername = (username) => {
     return async dispatch => {
-        const user = await userService.getUserByUsername(username)
+        let user = null
+        try {
+            user = await userService.getUserByUsername(username)
+        } catch (e) {
+            dispatch(setNotification(e.response.data.message, SEVERITY.ERROR))
+        }
 
         dispatch({
             type: 'GET_USER_BY_USERNAME',

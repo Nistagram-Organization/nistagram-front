@@ -16,6 +16,7 @@ import ContentReports from './components/ContentReports/ContentReports'
 import AgentRequests from './components/AgentRequests/AgentRequests'
 import ContentReport from './components/ContentReport/ContentReport'
 import UserProfileFeed from './components/UserProfileFeed/UserProfileFeed'
+import Search from './components/Search/Search'
 
 const App = () => {
     const dispatch = useDispatch()
@@ -49,14 +50,14 @@ const App = () => {
                             <Route path='/register'>
                                 <Register/>
                             </Route>
-                            <Route path='/public'>
-                                <div>Public posts</div>
+                            <Route path='/search'>
+                                <Search/>
                             </Route>
                             <Route exact path='/users/:username'>
                                 <UserProfileFeed/>
                             </Route>
                             <Route exact path='/'>
-                                <Redirect to='/public'/>
+                                <Redirect to='/search'/>
                             </Route>
                         </Switch>
                     </section>
@@ -109,12 +110,15 @@ const App = () => {
                                 <Route exact path='/users/:username'>
                                     <UserProfileFeed/>
                                 </Route>
+                                <Route path='/search'>
+                                    <Search/>
+                                </Route>
                                 <Route exact path='/'>
                                     <Redirect to='/posts'/>
                                 </Route>
                             </GuardProvider>
                         </Switch>
-                    </section>
+                     </section>
                     <Toaster/>
                 </div>
             )

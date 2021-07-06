@@ -23,12 +23,15 @@ const Header = () => {
                                 Nistagram
                             </RouterLink>
                         </div>
-                            <div>
-                                <LoginButton/>
-                            </div>
-                            <div>
-                                <Button component={RouterLink} to='/register'>Register</Button>
-                            </div>
+                        <div>
+                            <LoginButton/>
+                        </div>
+                        <div>
+                            <Button component={RouterLink} to='/register'>Register</Button>
+                        </div>
+                        <div>
+                            <Button component={RouterLink} to='/search'>Search</Button>
+                        </div>
                     </div>
                 </nav>
             )
@@ -42,15 +45,15 @@ const Header = () => {
                                 Nistagram
                             </RouterLink>
                         </div>
-                            <div>
-                                <Button component={RouterLink} to='/content-reports'>Content reports</Button>
-                            </div>
-                            <div>
-                                <Button component={RouterLink} to='/agent-requests'>Create post</Button>
-                            </div>
-                            <div>
-                                <LogoutButton/>
-                            </div>
+                        <div>
+                            <Button component={RouterLink} to='/content-reports'>Content reports</Button>
+                        </div>
+                        <div>
+                            <Button component={RouterLink} to='/agent-requests'>Create post</Button>
+                        </div>
+                        <div>
+                            <LogoutButton/>
+                        </div>
                     </div>
                 </nav>
             )
@@ -69,6 +72,9 @@ const Header = () => {
                         </div>
                         <div>
                             <Button component={RouterLink} to='/create-post'>Create post</Button>
+                        </div>
+                        <div>
+                            <Button component={RouterLink} to='/search'>Search</Button>
                         </div>
                         <div>
                             <Button component={RouterLink} to='/profile'>Profile</Button>

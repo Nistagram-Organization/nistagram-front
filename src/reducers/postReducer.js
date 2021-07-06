@@ -1,4 +1,6 @@
 import postService from '../services/postService'
+import { setNotification } from './notificationReducer'
+import SEVERITY from '../severity'
 
 export const getUsersPosts = (shownUser, loggedInUser) => {
     return async dispatch => {
@@ -65,6 +67,22 @@ export const sendComment = (userEmail, postId, comm) => {
 
     return async () => {
         await postService.postComment(commentToPost)
+    }
+}
+
+export const searchTags = (tag, userEmail) => {
+    return async dispatch => {
+        let posts = null
+        try {
+            posts = await postService.searchTags(tag, userEmail)
+        } catch (e) {
+            dispatch(setNotification(e.response.data.message, SEVERITY.ERROR))
+        }
+
+        dispatch({
+            type: 'GET_POSTS',
+            posts
+        })
     }
 }
 
