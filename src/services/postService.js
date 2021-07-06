@@ -71,6 +71,16 @@ const getPostsFeed = async (loggedInUser) => {
     return response.data
 }
 
+const searchTags = async (tag, userEmail) => {
+    const response = await axios.get(`${BASE_URL}/posts/search`, {
+        params: {
+            tag: tag,
+            user: userEmail
+        }
+    })
+    return response.data
+}
+
 const postService = {
     likePost,
     unlikePost,
@@ -81,7 +91,8 @@ const postService = {
     createPost,
     getInappropriateContent,
     getUsersPosts,
-    getPostsFeed
+    getPostsFeed,
+    searchTags
 }
 
 
