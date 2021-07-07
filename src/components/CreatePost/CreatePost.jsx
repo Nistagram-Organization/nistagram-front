@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 import { Button, Grid, TextareaAutosize } from '@material-ui/core'
 import ImageUploader from 'react-images-upload'
 import { toBase64 } from '../../image_utils'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { setNotification } from '../../reducers/notificationReducer'
 import { useAuth0 } from '@auth0/auth0-react'
 import SEVERITY from '../../severity'
@@ -19,7 +19,7 @@ const CreatePost = () => {
     const { user } = useAuth0()
     const dispatch = useDispatch()
     const [image, setImage] = useState(null)
-    const token = useState(state => state.authentication.token)
+    const token = useSelector(state => state.authentication.token)
 
     const formik = useFormik({
         initialValues: {

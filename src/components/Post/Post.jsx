@@ -15,7 +15,7 @@ import {
 } from '@material-ui/icons'
 import { useAuth0 } from '@auth0/auth0-react'
 import { dislikePost, getUsersPosts, likePost, reportPost, sendComment } from '../../reducers/postReducer'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { addPostToFavorites } from '../../reducers/userReducer'
 
 const Post = ({ id, description, date, image, username, liked, disliked, inFavorites, likes, dislikes, comments, shownUser }) => {
@@ -26,7 +26,7 @@ const Post = ({ id, description, date, image, username, liked, disliked, inFavor
     const [reported, setReported] = useState(false)
     const [comment, setComment] = useState('')
     const [favorite, setFavorite] = useState(inFavorites)
-    const token = useState(state => state.authentication.token)
+    const token = useSelector(state => state.authentication.token)
 
     const like = () => {
         if (!isDisliked) {
