@@ -19,6 +19,7 @@ const CreatePost = () => {
     const { user } = useAuth0()
     const dispatch = useDispatch()
     const [image, setImage] = useState(null)
+    const token = useState(state => state.authentication.token)
 
     const formik = useFormik({
         initialValues: {
@@ -38,7 +39,7 @@ const CreatePost = () => {
             }
 
             try {
-                await postService.createPost(postToProcess)
+                await postService.createPost(postToProcess, token)
                 dispatch(setNotification('Post created successfully', SEVERITY.SUCCESS))
             } catch (e) {
                 dispatch(setNotification(e.response.data.message, SEVERITY.ERROR))

@@ -12,6 +12,7 @@ const UserProfileFeed = () => {
     const dispatch = useDispatch()
     const shownUser = useSelector(state => state.users.shown)
     const following = useSelector(state => state.users.following)
+    const token = useSelector(state => state.authentication.token)
 
     const idMatch = useRouteMatch('/users/:username')
 
@@ -25,7 +26,7 @@ const UserProfileFeed = () => {
     }, [])
 
     const follow = () => {
-        dispatch(followUser(shownUser.email, user.email))
+        dispatch(followUser(shownUser.email, user.email, token))
     }
 
     if (!shownUser) {

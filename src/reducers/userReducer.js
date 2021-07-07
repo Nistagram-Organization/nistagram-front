@@ -2,16 +2,16 @@ import userService from '../services/userService'
 import { setNotification } from './notificationReducer'
 import SEVERITY from '../severity'
 
-export const addPostToFavorites = (userEmail, postId, favorite) => {
+export const addPostToFavorites = (userEmail, postId, favorite, token) => {
     return async () => {
         if (!favorite) {
             let favoritesDTO = {
                 'PostID': postId,
                 'UserEmail': userEmail
             }
-            await userService.addPostToFavorites(favoritesDTO)
+            await userService.addPostToFavorites(favoritesDTO, token)
         } else {
-            await userService.removePostFromFavorites(userEmail, postId)
+            await userService.removePostFromFavorites(userEmail, postId, token)
         }
     }
 }
@@ -43,9 +43,9 @@ export const getUserByUsername = (username) => {
     }
 }
 
-export const editUser = (user) => {
+export const editUser = (user, token) => {
     return async dispatch => {
-        user = await userService.editUser(user)
+        user = await userService.editUser(user, token)
 
         dispatch({
             type: 'EDIT_USER',
@@ -54,13 +54,13 @@ export const editUser = (user) => {
     }
 }
 
-export const followUser = (userEmail, loggedInUser) => {
+export const followUser = (userEmail, loggedInUser, token) => {
     return async dispatch => {
         let followRequest = {
             User: loggedInUser,
             UserToFollow: userEmail
         }
-        await userService.followUser(followRequest)
+        await userService.followUser(followRequest, token)
 
         dispatch({
             type: 'FOLLOWING_USER',

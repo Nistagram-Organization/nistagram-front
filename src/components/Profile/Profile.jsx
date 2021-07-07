@@ -33,6 +33,7 @@ const Profile = () => {
     const dispatch = useDispatch()
     const { user } = useAuth0()
     const activeUser = useSelector(state => state.users.user)
+    const token = useSelector(state => state.authentication.token)
     const defaultFormValues = {
         first_name: '',
         last_name: '',
@@ -62,7 +63,7 @@ const Profile = () => {
         onSubmit: async (values) => {
             try {
                 values.email = user.email
-                await dispatch(editUser(values))
+                await dispatch(editUser(values, token))
                 dispatch(setNotification('Successfully edited profile information', SEVERITY.SUCCESS))
             } catch (e) {
                 dispatch(setNotification('Failed to edit profile information', SEVERITY.ERROR))

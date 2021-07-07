@@ -26,23 +26,24 @@ const Post = ({ id, description, date, image, username, liked, disliked, inFavor
     const [reported, setReported] = useState(false)
     const [comment, setComment] = useState('')
     const [favorite, setFavorite] = useState(inFavorites)
+    const token = useState(state => state.authentication.token)
 
     const like = () => {
         if (!isDisliked) {
-            dispatch(likePost(user.email, id, isLiked))
+            dispatch(likePost(user.email, id, isLiked, token))
             loadChanges()
         }
     }
 
     const dislike = () => {
         if (!isLiked) {
-            dispatch(dislikePost(user.email, id, isDisliked))
+            dispatch(dislikePost(user.email, id, isDisliked, token))
             loadChanges()
         }
     }
 
     const addToFavorites = () => {
-        dispatch(addPostToFavorites(user.email, id, favorite))
+        dispatch(addPostToFavorites(user.email, id, favorite, token))
         loadChanges()
     }
 
@@ -50,14 +51,14 @@ const Post = ({ id, description, date, image, username, liked, disliked, inFavor
         if (reported)
             return
         setReported(true)
-        dispatch(reportPost(id))
+        dispatch(reportPost(id, token))
         loadChanges()
     }
 
     const postComment = (event) => {
         event.preventDefault()
 
-        dispatch(sendComment(user.email, id, comment))
+        dispatch(sendComment(user.email, id, comment, token))
         setComment('')
         loadChanges()
     }
