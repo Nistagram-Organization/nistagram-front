@@ -6,7 +6,9 @@ ENV PATH /app/node_modules/.bin:$PATH
 COPY package.json package-lock.json /app/
 RUN npm install --silent
 COPY . /app
-RUN npm run build
+ENV PORT=3001
+ENV REACT_APP_GATEWAY=nistagram-gateway:9092
+RUN react-scripts build
 
 FROM nginx:1.17.8-alpine
 COPY --from=build /app/build /usr/share/nginx/html
