@@ -14,11 +14,24 @@ import {
     ThumbUpAltOutlined
 } from '@material-ui/icons'
 import { useAuth0 } from '@auth0/auth0-react'
-import { dislikePost, getUsersPosts, likePost, reportPost, sendComment } from '../../reducers/postReducer'
+import { dislikePost, getPostsFeed, getUsersPosts, likePost, reportPost, sendComment } from '../../reducers/postReducer'
 import { useDispatch, useSelector } from 'react-redux'
 import { addPostToFavorites } from '../../reducers/userReducer'
 
-const Post = ({ id, description, date, image, username, liked, disliked, inFavorites, likes, dislikes, comments, shownUser }) => {
+const Post = ({
+                  id,
+                  description,
+                  date,
+                  image,
+                  username,
+                  liked,
+                  disliked,
+                  inFavorites,
+                  likes,
+                  dislikes,
+                  comments,
+                  shownUser
+              }) => {
     const { user } = useAuth0()
     const dispatch = useDispatch()
     const [isLiked, setIsLiked] = useState(liked)
@@ -64,7 +77,11 @@ const Post = ({ id, description, date, image, username, liked, disliked, inFavor
     }
 
     const loadChanges = () => {
-        dispatch(getUsersPosts(shownUser.email, user.email))
+        if (!shownUser) {
+            dispatch(getPostsFeed(user.email))
+        } else {
+            dispatch(getUsersPosts(shownUser.email, user.email))
+        }
     }
 
     return (
@@ -93,54 +110,55 @@ const Post = ({ id, description, date, image, username, liked, disliked, inFavor
             <div className="Post-caption">
                 <strong>{likes}</strong> likes <strong>{dislikes}</strong> dislikes
             </div>
-            <FormControlLabel id="like" onClick={like}
-                              control={<Checkbox icon={<ThumbUpAltOutlined/>}
-                                                 checkedIcon={<ThumbUpAlt/>}
-                                                 name="like"
-                                                 checked={isLiked}
-                                                 onChange={() => {
-                                                     if (!isDisliked)
-                                                         setIsLiked(!isLiked)
-                                                 }}/>}
-                              label=""/>
-            <FormControlLabel id="dislike" onClick={dislike}
-                              control={<Checkbox icon={<ThumbDownAltOutlined/>}
-                                                 checkedIcon={<ThumbDown/>}
-                                                 name="dislike"
-                                                 checked={isDisliked}
-                                                 onChange={() => {
-                                                     if (!isLiked)
-                                                         setIsDisliked(!isDisliked)
-                                                 }}/>}
-                              label=""/>
-            <FormControlLabel id="report" onClick={report}
-                              control={<Checkbox icon={<ReportOutlined/>}
-                                                 checkedIcon={<Report/>}
-                                                 name="report"
-                                                 checked={reported}/>}
-                              label=""/>
-            <FormControlLabel id="favorites" onClick={addToFavorites}
-                              control={<Checkbox icon={<FavoriteBorder/>}
-                                                 checkedIcon={<Favorite/>}
-                                                 name="favorites"
-                                                 checked={favorite}
-                                                 onChange={() => {
-                                                     setFavorite(!favorite)
-                                                 }}/>}
-                              label=""/>
+            {user ? <><FormControlLabel id="like" onClick={like}
+                                        control={<Checkbox icon={<ThumbUpAltOutlined/>}
+                                                           checkedIcon={<ThumbUpAlt/>}
+                                                           name="like"
+                                                           checked={isLiked}
+                                                           onChange={() => {
+                                                               if (!isDisliked)
+                                                                   setIsLiked(!isLiked)
+                                                           }}/>}
+                                        label=""/>
+                <FormControlLabel id="dislike" onClick={dislike}
+                                  control={<Checkbox icon={<ThumbDownAltOutlined/>}
+                                                     checkedIcon={<ThumbDown/>}
+                                                     name="dislike"
+                                                     checked={isDisliked}
+                                                     onChange={() => {
+                                                         if (!isLiked)
+                                                             setIsDisliked(!isDisliked)
+                                                     }}/>}
+                                  label=""/>
+                <FormControlLabel id="report" onClick={report}
+                                  control={<Checkbox icon={<ReportOutlined/>}
+                                                     checkedIcon={<Report/>}
+                                                     name="report"
+                                                     checked={reported}/>}
+                                  label=""/>
+                <FormControlLabel id="favorites" onClick={addToFavorites}
+                                  control={<Checkbox icon={<FavoriteBorder/>}
+                                                     checkedIcon={<Favorite/>}
+                                                     name="favorites"
+                                                     checked={favorite}
+                                                     onChange={() => {
+                                                         setFavorite(!favorite)
+                                                     }}/>}
+                                  label=""/></> : null}
             {comments.length !== 0 ? <div className="Post-comments">
                 {
                     comments.map((comment, index) => (
                         <div key={index}>
                             <p>
-                                <strong>{comment.username}</strong> <span dangerouslySetInnerHTML={{ __html: comment.text }}/><br/>
+                                <strong>{comment.username}</strong> <span
+                                dangerouslySetInnerHTML={{ __html: comment.text }}/><br/>
                                 <small>{comment.date}</small>
                             </p>
                         </div>
                     ))
                 }
             </div> : null}
-            <form className="Post-comment-box">
+            {user ? <form className="Post-comment-box">
                 <input
                     className="Post-input"
                     type="text"
@@ -154,7 +172,7 @@ const Post = ({ id, description, date, image, username, liked, disliked, inFavor
                     onClick={postComment}>
                     Post
                 </button>
-            </form>
+            </form> : null}
         </article>
     )
 }

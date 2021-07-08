@@ -42,7 +42,7 @@ const UserProfileFeed = () => {
                     <Avatar id="avatar"><strong id="first">{shownUser.username.substr(0, 1)}</strong></Avatar>
                 </Grid>
                 <Grid item xs={4}>
-                    <strong id="username">{shownUser.username}</strong>
+                    <strong id="usrnm">{shownUser.username}</strong>
                     <p>{shownUser.first_name} {shownUser.last_name}</p>
                     <i>{shownUser.biography}</i>
                 </Grid>
