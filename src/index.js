@@ -15,6 +15,7 @@ ReactDOM.render(
                 audience='https://nistagram-auth/'
                 redirectUri='http://localhost:3001/posts'
                 useRefreshTokens={true}
+                cacheLocation={'localstorage'}
             >
                 <App/>
             </Auth0Provider>

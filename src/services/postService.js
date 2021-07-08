@@ -2,48 +2,54 @@ import axios from 'axios'
 
 const BASE_URL = process.env.REACT_APP_GATEWAY_URL || process.env.REACT_APP_POSTS_URL
 
-const likePost = async (likeRequestDTO) => {
-    const response = await axios.post(`${BASE_URL}/posts/like`, likeRequestDTO)
+const likePost = async (likeRequestDTO, token) => {
+    const response = await axios.post(`${BASE_URL}/posts/like`, likeRequestDTO, { headers: { Authorization: `Bearer ${token}` } })
     return response.data
 }
 
-const unlikePost = async (userEmail, postId) => {
+const unlikePost = async (userEmail, postId, token) => {
     const response = await axios.delete(`${BASE_URL}/posts/like`, {
         params: {
             post_id: postId,
             user_mail: userEmail
+        },
+        headers: {
+            Authorization: `Bearer ${token}`
         }
     })
     return response.data
 }
 
-const dislikePost = async (dislikeRequestDTO) => {
-    const response = await axios.post(`${BASE_URL}/posts/dislike`, dislikeRequestDTO)
+const dislikePost = async (dislikeRequestDTO, token) => {
+    const response = await axios.post(`${BASE_URL}/posts/dislike`, dislikeRequestDTO, { headers: { Authorization: `Bearer ${token}` } })
     return response.data
 }
 
-const undislikePost = async (userEmail, postId) => {
+const undislikePost = async (userEmail, postId, token) => {
     const response = await axios.delete(`${BASE_URL}/posts/dislike`, {
         params: {
             post_id: postId,
             user_mail: userEmail
+        },
+        headers: {
+            Authorization: `Bearer ${token}`
         }
     })
     return response.data
 }
 
-const report = async (postId) => {
-    const response = await axios.post(`${BASE_URL}/posts/report/${postId}`)
+const report = async (postId, token) => {
+    const response = await axios.post(`${BASE_URL}/posts/report/${postId}`, null, { headers: { Authorization: `Bearer ${token}` } })
     return response.data
 }
 
-const postComment = async (comment) => {
-    const response = await axios.post(`${BASE_URL}/posts/comment`, comment)
+const postComment = async (comment, token) => {
+    const response = await axios.post(`${BASE_URL}/posts/comment`, comment, { headers: { Authorization: `Bearer ${token}` } })
     return response.data
 }
 
-const createPost = async (post) => {
-    const response = await axios.post(`${BASE_URL}/posts`, post)
+const createPost = async (post, token) => {
+    const response = await axios.post(`${BASE_URL}/posts`, post, { headers: { Authorization: `Bearer ${token}` } })
     return response.data
 }
 
@@ -57,15 +63,18 @@ const getUsersPosts = async (shownUser, loggedInUser) => {
     return response.data
 }
 
-const getInappropriateContent = async () => {
-    const response = await axios.get(`${BASE_URL}/posts/inappropriate`)
+const getInappropriateContent = async (token) => {
+    const response = await axios.get(`${BASE_URL}/posts/inappropriate`, { headers: { Authorization: `Bearer ${token}` } })
     return response.data
 }
 
-const getPostsFeed = async (loggedInUser) => {
+const getPostsFeed = async (loggedInUser, token) => {
     const response = await axios.get(`${BASE_URL}/posts/feed`, {
         params: {
             user: loggedInUser,
+        },
+        headers: {
+            Authorization: `Bearer ${token}`
         }
     })
     return response.data
