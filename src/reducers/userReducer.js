@@ -80,6 +80,32 @@ export const checkIfUserIsFollowing = (userEmail, loggedInUser) => {
     }
 }
 
+export const muteUser = (userEmail, loggedInUser, token) => {
+    return async dispatch => {
+        let muteRequest = {
+            User: loggedInUser,
+            UserToMute: userEmail
+        }
+        await userService.muteUser(muteRequest, token)
+
+        dispatch({
+            type: 'MUTED_USER',
+            muted: true
+        })
+    }
+}
+
+export const checkIfUserIsMuted = (userEmail, loggedInUser) => {
+    return async dispatch => {
+        let muted = await userService.checkIfUserIsMuted(userEmail, loggedInUser)
+
+        dispatch({
+            type: 'MUTED_USER',
+            muted
+        })
+    }
+}
+
 const reducer = (state = { user: null, shown: null, following: false }, action) => {
     switch (action.type) {
         case 'GET_USER': {
@@ -102,6 +128,12 @@ const reducer = (state = { user: null, shown: null, following: false }, action) 
             return {
                 ...state,
                 following: action.following
+            }
+        }
+        case 'MUTED_USER': {
+            return {
+                ...state,
+                muted: action.muted
             }
         }
         default:
