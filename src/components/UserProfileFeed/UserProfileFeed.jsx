@@ -19,7 +19,7 @@ const UserProfileFeed = () => {
     const shownUser = useSelector(state => state.users.shown)
     const following = useSelector(state => state.users.following)
     const muted = useSelector(state => state.users.muted)
-    
+
     const token = useSelector(state => state.authentication.token)
 
     const idMatch = useRouteMatch('/users/:username')
