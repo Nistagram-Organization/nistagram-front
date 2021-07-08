@@ -47,6 +47,21 @@ const checkIfUserIsFollowing = async (userEmail, loggedInUser) => {
     return response.data
 }
 
+const muteUser = async (muteRequest, token) => {
+    const response = await axios.post(`${BASE_URL}/users/muted`, muteRequest, { headers: { Authorization: `Bearer ${token}` } })
+    return response.data
+}
+
+const checkIfUserIsMuted = async (userEmail, loggedInUser) => {
+    const response = await axios.get(`${BASE_URL}/users/muted`, {
+        params: {
+            user: loggedInUser,
+            muted_user: userEmail
+        }
+    })
+    return response.data
+}
+
 
 const userService = {
     getUser,
@@ -55,7 +70,9 @@ const userService = {
     removePostFromFavorites,
     getUserByUsername,
     checkIfUserIsFollowing,
-    followUser
+    followUser,
+    checkIfUserIsMuted,
+    muteUser
 }
 
 export default userService
