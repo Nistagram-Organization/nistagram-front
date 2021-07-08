@@ -8,13 +8,14 @@ const Posts = ({ shownUser, loggedInUser, search }) => {
     const dispatch = useDispatch()
     const posts = useSelector(state => state.posts.list)
     const following = useSelector(state => state.users.following)
+    const token = useSelector(state => state.authentication.token)
 
     useEffect(() => {
         if (shownUser !== undefined) {
             dispatch(getUsersPosts(shownUser.email, loggedInUser))
         } else {
             if (!search)
-                dispatch(getPostsFeed(loggedInUser))
+                dispatch(getPostsFeed(loggedInUser, token))
         }
     }, [])
 

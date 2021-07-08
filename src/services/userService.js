@@ -12,28 +12,31 @@ const getUserByUsername = async (username) => {
     return response.data
 }
 
-const editUser = async (user) => {
-    const response = await axios.put(`${BASE_URL}/users`, user)
+const editUser = async (user, token) => {
+    const response = await axios.put(`${BASE_URL}/users`, user, { headers: { Authorization: `Bearer ${token}` } })
     return response.data
 }
 
-const addPostToFavorites = async (favoritesDTO) => {
-    const response = await axios.post(`${BASE_URL}/users/favorites`, favoritesDTO)
+const addPostToFavorites = async (favoritesDTO, token) => {
+    const response = await axios.post(`${BASE_URL}/users/favorites`, favoritesDTO,  { headers: { Authorization: `Bearer ${token}` } })
     return response.data
 }
 
-const removePostFromFavorites = async (userEmail, postId) => {
+const removePostFromFavorites = async (userEmail, postId, token) => {
     const response = await axios.delete(`${BASE_URL}/users/favorites`, {
         params: {
             post_id: postId,
             user_mail: userEmail
+        },
+        headers: {
+            Authorization: `Bearer ${token}`
         }
     })
     return response.data
 }
 
-const followUser = async (followRequest) => {
-    const response = await axios.post(`${BASE_URL}/users/following`, followRequest)
+const followUser = async (followRequest, token) => {
+    const response = await axios.post(`${BASE_URL}/users/following`, followRequest, { headers: { Authorization: `Bearer ${token}` } })
     return response.data
 }
 

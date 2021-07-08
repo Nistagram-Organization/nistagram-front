@@ -12,6 +12,7 @@ const UserProfileFeed = () => {
     const dispatch = useDispatch()
     const shownUser = useSelector(state => state.users.shown)
     const following = useSelector(state => state.users.following)
+    const token = useSelector(state => state.authentication.token)
 
     const idMatch = useRouteMatch('/users/:username')
 
@@ -25,7 +26,7 @@ const UserProfileFeed = () => {
     }, [])
 
     const follow = () => {
-        dispatch(followUser(shownUser.email, user.email))
+        dispatch(followUser(shownUser.email, user.email, token))
     }
 
     if (!shownUser) {
@@ -41,7 +42,7 @@ const UserProfileFeed = () => {
                     <Avatar id="avatar"><strong id="first">{shownUser.username.substr(0, 1)}</strong></Avatar>
                 </Grid>
                 <Grid item xs={4}>
-                    <strong id="username">{shownUser.username}</strong>
+                    <strong id="usrnm">{shownUser.username}</strong>
                     <p>{shownUser.first_name} {shownUser.last_name}</p>
                     <i>{shownUser.biography}</i>
                 </Grid>

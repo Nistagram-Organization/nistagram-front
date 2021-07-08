@@ -13,9 +13,9 @@ export const getUsersPosts = (shownUser, loggedInUser) => {
     }
 }
 
-export const getPostsFeed = (loggedInUser) => {
+export const getPostsFeed = (loggedInUser, token) => {
     return async dispatch => {
-        const posts = await postService.getPostsFeed(loggedInUser)
+        const posts = await postService.getPostsFeed(loggedInUser, token)
 
         dispatch({
             type: 'GET_POSTS',
@@ -24,41 +24,41 @@ export const getPostsFeed = (loggedInUser) => {
     }
 }
 
-export const likePost = (userEmail, postId, liked) => {
+export const likePost = (userEmail, postId, liked, token) => {
     return async () => {
         if (!liked) {
             let likeRequestDTO = {
                 'PostID': postId,
                 'UserEmail': userEmail
             }
-            await postService.likePost(likeRequestDTO)
+            await postService.likePost(likeRequestDTO, token)
         } else {
-            await postService.unlikePost(userEmail, postId)
+            await postService.unlikePost(userEmail, postId, token)
         }
     }
 }
 
-export const dislikePost = (userEmail, postId, disliked) => {
+export const dislikePost = (userEmail, postId, disliked, token) => {
     return async () => {
         if (!disliked) {
             let dislikeRequestDTO = {
                 'PostID': postId,
                 'UserEmail': userEmail
             }
-            await postService.dislikePost(dislikeRequestDTO)
+            await postService.dislikePost(dislikeRequestDTO, token)
         } else {
-            await postService.undislikePost(userEmail, postId)
+            await postService.undislikePost(userEmail, postId, token)
         }
     }
 }
 
-export const reportPost = (postId) => {
+export const reportPost = (postId, token) => {
     return async () => {
-        await postService.report(postId)
+        await postService.report(postId, token)
     }
 }
 
-export const sendComment = (userEmail, postId, comm) => {
+export const sendComment = (userEmail, postId, comm, token) => {
     let commentToPost = {
         'PostID': postId,
         'user_email': userEmail,
@@ -66,7 +66,7 @@ export const sendComment = (userEmail, postId, comm) => {
     }
 
     return async () => {
-        await postService.postComment(commentToPost)
+        await postService.postComment(commentToPost, token)
     }
 }
 

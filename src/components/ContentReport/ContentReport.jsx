@@ -19,6 +19,7 @@ const ContentReport = () => {
         delete: false,
         terminate: false
     })
+    const token = useSelector(state => state.authentication.token)
 
     useEffect(() => {
         setDecision({ ...decision, author_email: report.author_email, post_id: report.post_id })
@@ -26,7 +27,7 @@ const ContentReport = () => {
 
     const sendRequest = async () => {
         try {
-            await adminService.decideOnPost(decision)
+            await adminService.decideOnPost(decision, token)
             dispatch(getInappropriateContent())
             dispatch(setNotification('Successfully decided on post', SEVERITY.SUCCESS))
         } catch (e) {
