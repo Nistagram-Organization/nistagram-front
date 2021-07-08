@@ -1,7 +1,13 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { useRouteMatch } from 'react-router-dom'
 import React, { useEffect } from 'react'
-import { checkIfUserIsFollowing, followUser, getUserByUsername } from '../../reducers/userReducer'
+import {
+    checkIfUserIsFollowing,
+    checkIfUserIsMuted,
+    followUser,
+    getUserByUsername,
+    muteUser
+} from '../../reducers/userReducer'
 import { Avatar, Button, CircularProgress, Grid } from '@material-ui/core'
 import Posts from '../Posts/Posts'
 import './UserProfileFeed.css'
@@ -12,6 +18,8 @@ const UserProfileFeed = () => {
     const dispatch = useDispatch()
     const shownUser = useSelector(state => state.users.shown)
     const following = useSelector(state => state.users.following)
+    const muted = useSelector(state => state.users.muted)
+    const token = useSelector(state => state.authentication.token)
 
     const idMatch = useRouteMatch('/users/:username')
 
@@ -21,11 +29,16 @@ const UserProfileFeed = () => {
         }
         if (user) {
             dispatch(checkIfUserIsFollowing(shownUser.email, user.email))
+            dispatch(checkIfUserIsMuted(shownUser.email, user.email))
         }
     }, [])
 
     const follow = () => {
         dispatch(followUser(shownUser.email, user.email))
+    }
+
+    const mute = () => {
+        dispatch(muteUser(shownUser.email, user.email, token))
     }
 
     if (!shownUser) {
@@ -48,6 +61,10 @@ const UserProfileFeed = () => {
                 {user && !following && user.email && shownUser.email !== user.email ?
                     <Grid item xs={2}>
                         <Button id="followButton" variant="contained" color="primary" onClick={follow}>Follow</Button>
+                    </Grid> : null}
+                {user && following && !muted && user.email && shownUser.email !== user.email ?
+                    <Grid item xs={2}>
+                        <Button id="muteButton" variant="contained" color="primary" onClick={mute}>Mute</Button>
                     </Grid> : null}
             </Grid>
             <Posts shownUser={shownUser} loggedInUser={user ? user.email : ''}/>
