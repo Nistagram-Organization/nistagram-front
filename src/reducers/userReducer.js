@@ -106,7 +106,33 @@ export const checkIfUserIsMuted = (userEmail, loggedInUser) => {
     }
 }
 
-const reducer = (state = { user: null, shown: null, following: false }, action) => {
+export const blockUser = (userEmail, loggedInUser, token) => {
+    return async dispatch => {
+        let blockRequest = {
+            User: loggedInUser,
+            UserToBlock: userEmail
+        }
+        await userService.blockUser(blockRequest, token)
+
+        dispatch({
+            type: 'BLOCKED_USER',
+            blocked: true
+        })
+    }
+}
+
+export const checkIfUserIsBlocked = (userEmail, loggedInUser) => {
+    return async dispatch => {
+        let blocked = await userService.checkIfUserIsBlocked(userEmail, loggedInUser)
+
+        dispatch({
+            type: 'BLOCKED_USER',
+            blocked
+        })
+    }
+}
+
+const reducer = (state = { user: null, shown: null, following: false, muted: false, blocked: false }, action) => {
     switch (action.type) {
         case 'GET_USER': {
             return {
@@ -134,6 +160,12 @@ const reducer = (state = { user: null, shown: null, following: false }, action) 
             return {
                 ...state,
                 muted: action.muted
+            }
+        }
+        case 'BLOCKED_USER': {
+            return {
+                ...state,
+                blocked: action.blocked
             }
         }
         default:

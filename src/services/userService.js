@@ -65,6 +65,21 @@ const checkIfUserIsMuted = async (userEmail, loggedInUser) => {
     return response.data
 }
 
+const blockUser = async (blockRequest, token) => {
+    const response = await axios.post(`${BASE_URL}/users/blocked`, blockRequest, { headers: { Authorization: `Bearer ${token}` } })
+    return response.data
+}
+
+const checkIfUserIsBlocked = async (userEmail, loggedInUser) => {
+    const response = await axios.get(`${BASE_URL}/users/blocked`, {
+        params: {
+            user: loggedInUser,
+            blocked_user: userEmail
+        }
+    })
+    return response.data
+}
+
 
 const userService = {
     getUser,
@@ -75,7 +90,9 @@ const userService = {
     checkIfUserIsFollowing,
     followUser,
     checkIfUserIsMuted,
-    muteUser
+    muteUser,
+    checkIfUserIsBlocked,
+    blockUser
 }
 
 export default userService
