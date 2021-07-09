@@ -49,7 +49,7 @@ const Header = () => {
                             <Button component={RouterLink} to='/content-reports'>Content reports</Button>
                         </div>
                         <div>
-                            <Button component={RouterLink} to='/agent-requests'>Create post</Button>
+                            <Button component={RouterLink} to='/agent-requests'>Agent requests</Button>
                         </div>
                         <div>
                             <LogoutButton/>

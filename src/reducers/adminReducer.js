@@ -1,8 +1,8 @@
 import postService from '../services/postService'
 
-export const getInappropriateContent = () => {
+export const getInappropriateContent = (token) => {
     return async dispatch => {
-        const reports = await postService.getInappropriateContent()
+        const reports = await postService.getInappropriateContent(token)
 
         dispatch({
             type: 'GET_INAPPROPRIATE_CONTENT',
