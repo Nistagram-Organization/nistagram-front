@@ -7,10 +7,11 @@ import ContentReportPreview from '../ContentReportPreview/ContentReportPreview'
 
 const ContentReports = () => {
     const reports = useSelector(state => state.admin.reports)
+    const token = useSelector(state => state.authentication.token)
     const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(getInappropriateContent())
+        dispatch(getInappropriateContent(token))
     }, [])
 
 

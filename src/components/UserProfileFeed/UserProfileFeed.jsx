@@ -31,7 +31,7 @@ const UserProfileFeed = () => {
         if (!shownUser || shownUser.username !== idMatch) {
             idMatch && dispatch(getUserByUsername(idMatch.params.username))
         }
-        if (user) {
+        if (user && shownUser) {
             dispatch(checkIfUserIsFollowing(shownUser.email, user.email))
             dispatch(checkIfUserIsMuted(shownUser.email, user.email))
             dispatch(checkIfUserIsBlocked(shownUser.email, user.email))
@@ -57,7 +57,7 @@ const UserProfileFeed = () => {
     }
 
     return (
-        <>{user && !blocked ? <>
+        <>{!user || (user && !blocked) ? <>
                 <Grid container id="grid" spacing={4}>
                     <Grid item xs={6}>
                         <Avatar id="avatar"><strong id="first">{shownUser.username.substr(0, 1)}</strong></Avatar>
@@ -80,9 +80,9 @@ const UserProfileFeed = () => {
                             <Button id="blockButton" variant="contained" color="primary" onClick={block}>Block</Button>
                         </Grid> : null}
                 </Grid>
-                <Posts shownUser={shownUser} loggedInUser={user ? user.email : ''}/></> :
-            <div><strong id="block">This profile is blocked.</strong>
-            </div>}
+                <Posts shownUser={shownUser} loggedInUser={user ? user.email : ''}/></> : null}
+            {blocked ? <div><strong id="block">This profile is blocked.</strong>
+            </div> : null}
         </>
     )
 }

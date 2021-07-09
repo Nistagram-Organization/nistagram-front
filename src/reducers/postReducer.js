@@ -25,7 +25,7 @@ export const getPostsFeed = (loggedInUser, token) => {
 }
 
 export const likePost = (userEmail, postId, liked, token) => {
-    return async () => {
+    return async dispatch => {
         if (!liked) {
             let likeRequestDTO = {
                 'PostID': postId,
@@ -35,11 +35,15 @@ export const likePost = (userEmail, postId, liked, token) => {
         } else {
             await postService.unlikePost(userEmail, postId, token)
         }
+
+        dispatch({
+            type: 'LIKE_POST'
+        })
     }
 }
 
 export const dislikePost = (userEmail, postId, disliked, token) => {
-    return async () => {
+    return async dispatch => {
         if (!disliked) {
             let dislikeRequestDTO = {
                 'PostID': postId,
@@ -49,12 +53,20 @@ export const dislikePost = (userEmail, postId, disliked, token) => {
         } else {
             await postService.undislikePost(userEmail, postId, token)
         }
+
+        dispatch({
+            type: 'DISLIKE_POST'
+        })
     }
 }
 
 export const reportPost = (postId, token) => {
-    return async () => {
+    return async dispatch => {
         await postService.report(postId, token)
+
+        dispatch({
+            type: 'REPORT_POST'
+        })
     }
 }
 
@@ -65,8 +77,12 @@ export const sendComment = (userEmail, postId, comm, token) => {
         'text': comm,
     }
 
-    return async () => {
+    return async dispatch => {
         await postService.postComment(commentToPost, token)
+
+        dispatch({
+            type: 'POST_COMMENT'
+        })
     }
 }
 

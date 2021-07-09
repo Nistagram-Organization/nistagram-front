@@ -43,42 +43,39 @@ const Post = ({
 
     const like = () => {
         if (!isDisliked) {
-            dispatch(likePost(user.email, id, isLiked, token))
-            loadChanges()
+            dispatch(likePost(user.email, id, isLiked, token)).then(() => loadChanges())
         }
     }
 
     const dislike = () => {
         if (!isLiked) {
-            dispatch(dislikePost(user.email, id, isDisliked, token))
-            loadChanges()
+            dispatch(dislikePost(user.email, id, isDisliked, token)).then(() => loadChanges())
         }
     }
 
     const addToFavorites = () => {
-        dispatch(addPostToFavorites(user.email, id, favorite, token))
-        loadChanges()
+        dispatch(addPostToFavorites(user.email, id, favorite, token)).then(() => loadChanges())
     }
 
     const report = () => {
         if (reported)
             return
         setReported(true)
-        dispatch(reportPost(id, token))
-        loadChanges()
+        dispatch(reportPost(id, token)).then(() => loadChanges())
     }
 
     const postComment = (event) => {
         event.preventDefault()
 
-        dispatch(sendComment(user.email, id, comment, token))
-        setComment('')
-        loadChanges()
+        dispatch(sendComment(user.email, id, comment, token)).then(() => {
+            loadChanges()
+            setComment('')
+        })
     }
 
     const loadChanges = () => {
         if (!shownUser) {
-            dispatch(getPostsFeed(user.email))
+            dispatch(getPostsFeed(user.email, token))
         } else {
             dispatch(getUsersPosts(shownUser.email, user.email))
         }

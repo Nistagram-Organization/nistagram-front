@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useRouteMatch, useHistory } from 'react-router-dom'
 import { Button, ButtonGroup } from '@material-ui/core'
@@ -13,22 +13,24 @@ const ContentReport = () => {
     const idMatch = useRouteMatch('/content-reports/:id')
     const reports = useSelector(state => state.admin.reports)
     const report = reports.find(element => element.post_id === Number(idMatch.params.id))
-    const [ decision, setDecision ] = useState({
+    const decision = {
         post_id: null,
         author_email: null,
         delete: false,
         terminate: false
-    })
+    }
+
     const token = useSelector(state => state.authentication.token)
 
     useEffect(() => {
-        setDecision({ ...decision, author_email: report.author_email, post_id: report.post_id })
+        decision.author_email = report.author_email
+        decision.post_id = report.post_id
     }, [])
 
-    const sendRequest = async () => {
+    const sendRequest = async (d) => {
         try {
-            await adminService.decideOnPost(decision, token)
-            dispatch(getInappropriateContent())
+            await adminService.decideOnPost(d, token)
+            dispatch(getInappropriateContent(token))
             dispatch(setNotification('Successfully decided on post', SEVERITY.SUCCESS))
         } catch (e) {
             dispatch(setNotification('Failed to decide on post', SEVERITY.ERROR))
@@ -40,13 +42,20 @@ const ContentReport = () => {
     }
 
     const decideDelete = () => {
-        setDecision({ ...decision, delete: true })
-        sendRequest().then(() => history.push('/content-reports'))
+        const d = {
+            ...decision
+        }
+        d.delete = true
+        sendRequest(d).then(() => history.push('/content-reports'))
     }
 
     const decideDeleteAndTerminate = async () => {
-        setDecision({ ...decision, delete: true, terminate: true })
-        sendRequest().then(() => history.push('/content-reports'))
+        const d = {
+            ...decision
+        }
+        d.delete = true
+        d.terminate = true
+        sendRequest(d).then(() => history.push('/content-reports'))
     }
 
     return (
